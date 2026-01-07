@@ -9,6 +9,7 @@ services:
     environment:
       - DATABASE_URL=postgresql://cloudcode:cloudcode@postgres:5432/cloudcode
       - REDIS_URL=redis://redis:6379
+      - PYTHONPATH=/app/src
     env_file:
       - .env
     volumes:
@@ -30,6 +31,7 @@ services:
     environment:
       - DATABASE_URL=postgresql://cloudcode:cloudcode@postgres:5432/cloudcode
       - REDIS_URL=redis://redis:6379
+      - PYTHONPATH=/app/src
     env_file:
       - .env
     volumes:
