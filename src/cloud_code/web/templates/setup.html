@@ -23,7 +23,7 @@
     <!-- Step 1: GitHub App -->
     <div class="bg-white rounded-lg shadow p-6 mb-6">
         <div class="flex items-center justify-between mb-4">
-            <h2 class="text-xl font-semibold flex items-center gap-2">
+            <h2 class="text-xl font-semibold flex items-center gap-2 text-gray-800">
                 <span id="github-status-icon" class="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center text-white text-sm">1</span>
                 GitHub App Configuration
             </h2>
@@ -36,7 +36,7 @@
 
         <div id="github-not-configured">
             <div class="bg-gray-50 rounded p-4 mb-4">
-                <h3 class="font-medium mb-2">First, create a GitHub App:</h3>
+                <h3 class="font-medium mb-2 text-gray-700">First, create a GitHub App:</h3>
                 <ol class="list-decimal list-inside text-sm text-gray-600 space-y-1">
                     <li>Go to <a href="https://github.com/settings/apps/new" target="_blank" class="text-blue-600 hover:underline">GitHub App Settings</a></li>
                     <li>Set Webhook URL to: <code class="bg-gray-200 px-1 rounded" id="webhook-url"></code></li>
@@ -49,28 +49,28 @@
             <form id="github-app-form" class="space-y-4">
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium mb-1">App ID</label>
+                        <label class="block text-sm font-medium mb-1 text-gray-700">App ID</label>
                         <input type="text" name="app_id" required
                             class="w-full border rounded px-3 py-2" placeholder="123456">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-1">Client ID</label>
+                        <label class="block text-sm font-medium mb-1 text-gray-700">Client ID</label>
                         <input type="text" name="client_id" required
                             class="w-full border rounded px-3 py-2" placeholder="Iv1.xxxxxxxxxx">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium mb-1">Client Secret</label>
+                    <label class="block text-sm font-medium mb-1 text-gray-700">Client Secret</label>
                     <input type="password" name="client_secret" required
                         class="w-full border rounded px-3 py-2">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium mb-1">Webhook Secret</label>
+                    <label class="block text-sm font-medium mb-1 text-gray-700">Webhook Secret</label>
                     <input type="password" name="webhook_secret" required
                         class="w-full border rounded px-3 py-2">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium mb-1">Private Key (PEM)</label>
+                    <label class="block text-sm font-medium mb-1 text-gray-700">Private Key (PEM)</label>
                     <textarea name="private_key" required rows="6"
                         class="w-full border rounded px-3 py-2 font-mono text-sm"
                         placeholder="-----BEGIN RSA PRIVATE KEY-----"></textarea>
@@ -93,7 +93,7 @@
     <!-- Step 2: CLI API Keys -->
     <div class="bg-white rounded-lg shadow p-6 mb-6">
         <div class="flex items-center justify-between mb-4">
-            <h2 class="text-xl font-semibold flex items-center gap-2">
+            <h2 class="text-xl font-semibold flex items-center gap-2 text-gray-800">
                 <span id="cli-status-icon" class="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center text-white text-sm">2</span>
                 CLI API Keys
             </h2>
@@ -106,25 +106,25 @@
 
         <form id="cli-form" class="space-y-4">
             <div>
-                <label class="block text-sm font-medium mb-1">
+                <label class="block text-sm font-medium mb-1 text-gray-700">
                     Anthropic API Key
-                    <span class="text-gray-400 font-normal">(for Claude Code, Aider)</span>
+                    <span class="text-gray-500 font-normal">(for Claude Code, Aider)</span>
                 </label>
                 <input type="password" name="anthropic_api_key"
                     class="w-full border rounded px-3 py-2" placeholder="sk-ant-...">
             </div>
             <div>
-                <label class="block text-sm font-medium mb-1">
+                <label class="block text-sm font-medium mb-1 text-gray-700">
                     OpenAI API Key
-                    <span class="text-gray-400 font-normal">(for Codex, Aider)</span>
+                    <span class="text-gray-500 font-normal">(for Codex, Aider)</span>
                 </label>
                 <input type="password" name="openai_api_key"
                     class="w-full border rounded px-3 py-2" placeholder="sk-...">
             </div>
             <div>
-                <label class="block text-sm font-medium mb-1">
+                <label class="block text-sm font-medium mb-1 text-gray-700">
                     Google API Key
-                    <span class="text-gray-400 font-normal">(for Gemini)</span>
+                    <span class="text-gray-500 font-normal">(for Gemini)</span>
                 </label>
                 <input type="password" name="google_api_key"
                     class="w-full border rounded px-3 py-2" placeholder="AIza...">
@@ -143,7 +143,7 @@
     <!-- Step 3: Select Repositories -->
     <div class="bg-white rounded-lg shadow p-6 mb-6">
         <div class="flex items-center justify-between mb-4">
-            <h2 class="text-xl font-semibold flex items-center gap-2">
+            <h2 class="text-xl font-semibold flex items-center gap-2 text-gray-800">
                 <span id="repos-status-icon" class="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center text-white text-sm">3</span>
                 Repository Selection
             </h2>
