@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  # Cloud Code Orchestrator Application
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://cloudcode:cloudcode@postgres:5432/cloudcode
+      - REDIS_URL=redis://redis:6379
+    env_file:
+      - .env
+    volumes:
+      - ./src:/app/src
+      - ./prompts:/app/prompts
+      - workspaces:/var/cloud-code/workspaces
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - cloud-code-network
+      - default
+    command: uvicorn cloud_code.main:app --host 0.0.0.0 --port 8000 --reload
+
+  # Celery Worker (for background tasks)
+  worker:
+    build: .
+    environment:
+      - DATABASE_URL=postgresql://cloudcode:cloudcode@postgres:5432/cloudcode
+      - REDIS_URL=redis://redis:6379
+    env_file:
+      - .env
+    volumes:
+      - ./src:/app/src
+      - ./prompts:/app/prompts
+      - workspaces:/var/cloud-code/workspaces
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - cloud-code-network
+      - default
+    command: celery -A cloud_code.queue worker -l info
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=cloudcode
+      - POSTGRES_PASSWORD=cloudcode
+      - POSTGRES_DB=cloudcode
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  # Redis (for task queue)
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  # HashiCorp Vault (for credential management)
+  vault:
+    image: hashicorp/vault:1.15
+    ports:
+      - "8200:8200"
+    environment:
+      - VAULT_DEV_ROOT_TOKEN_ID=dev-token
+      - VAULT_DEV_LISTEN_ADDRESS=0.0.0.0:8200
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - vault_data:/vault/data
+
+networks:
+  cloud-code-network:
+    driver: bridge
+    name: cloud-code-network
+
+volumes:
+  postgres_data:
+  redis_data:
+  workspaces:
+  vault_data:

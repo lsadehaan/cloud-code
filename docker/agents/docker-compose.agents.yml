@@ -1,0 +1,88 @@
+# Docker Compose for Cloud Code Agent Containers
+# These are managed dynamically by the ContainerManager, not run directly
+# This file is for reference and manual testing
+
+version: '3.8'
+
+services:
+  # Base image builder (build this first)
+  agent-base:
+    build:
+      context: ../..
+      dockerfile: docker/agents/base/Dockerfile
+    image: cloud-code/agent-base:latest
+
+  # Claude Code Agent
+  claude-code-agent:
+    build:
+      context: ../..
+      dockerfile: docker/agents/claude-code/Dockerfile
+    image: cloud-code/claude-code-agent:latest
+    depends_on:
+      - agent-base
+    environment:
+      - AGENT_TYPE=general
+      - CODING_CLI=claude-code
+      # ANTHROPIC_API_KEY injected at runtime
+    volumes:
+      - workspace:/workspace
+    networks:
+      - cloud-code-network
+
+  # Aider Agent
+  aider-agent:
+    build:
+      context: ../..
+      dockerfile: docker/agents/aider/Dockerfile
+    image: cloud-code/aider-agent:latest
+    depends_on:
+      - agent-base
+    environment:
+      - AGENT_TYPE=general
+      - CODING_CLI=aider
+      # ANTHROPIC_API_KEY or OPENAI_API_KEY injected at runtime
+    volumes:
+      - workspace:/workspace
+    networks:
+      - cloud-code-network
+
+  # OpenAI Codex Agent
+  codex-agent:
+    build:
+      context: ../..
+      dockerfile: docker/agents/codex/Dockerfile
+    image: cloud-code/codex-agent:latest
+    depends_on:
+      - agent-base
+    environment:
+      - AGENT_TYPE=general
+      - CODING_CLI=codex
+      # OPENAI_API_KEY injected at runtime
+    volumes:
+      - workspace:/workspace
+    networks:
+      - cloud-code-network
+
+  # Google Gemini Agent
+  gemini-agent:
+    build:
+      context: ../..
+      dockerfile: docker/agents/gemini/Dockerfile
+    image: cloud-code/gemini-agent:latest
+    depends_on:
+      - agent-base
+    environment:
+      - AGENT_TYPE=general
+      - CODING_CLI=gemini
+      # GOOGLE_API_KEY injected at runtime
+    volumes:
+      - workspace:/workspace
+    networks:
+      - cloud-code-network
+
+networks:
+  cloud-code-network:
+    driver: bridge
+
+volumes:
+  workspace:
